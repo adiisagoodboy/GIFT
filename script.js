@@ -8,7 +8,7 @@ const AUTH_PASSWORD = "bday";
 // Exact unlock date & time (Asia/Kolkata) - edit these to the desired date/time
 const UNLOCK_YEAR  = 2025;    // e.g. 2025
 const UNLOCK_MONTH = 9;       // 1..12 (September = 9)
-const UNLOCK_DATE  = 21;      // day of month
+const UNLOCK_DATE  = 22;      // day of month
 const UNLOCK_HOUR  = 0;       // 1-12 human friendly
 const UNLOCK_MIN   = 0;
 const UNLOCK_AMPM  = "AM";    // "AM" or "PM"
@@ -304,3 +304,4 @@ requestAnimationFrame(frame);
   }
   updateLoop();
 })();
+
