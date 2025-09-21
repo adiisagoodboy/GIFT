@@ -1,0 +1,167 @@
+:root{
+  --bg1:#fff0f6; --bg2:#ffe6f0;
+  --accent:#ff6fa3; --accent-600:#ff3d8b;
+  --muted:#f6dfe6; --card:#ffffff;
+  --text:#6b4052; --soft-shadow: 0 16px 40px rgba(255,105,180,0.10);
+  --glass: rgba(255,255,255,0.85);
+  --radius:18px;
+  --break:880px;
+}
+
+/* base */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;font-family:Inter,Comfortaa,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--text);background:linear-gradient(180deg,var(--bg1),var(--bg2));-webkit-font-smoothing:antialiased}
+#bgCanvas{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* layout */
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;position:relative;z-index:1}
+.card{width:100%;max-width:1100px;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.96));border-radius:var(--radius);padding:28px 20px 62px 20px;box-shadow:var(--soft-shadow);overflow:hidden;position:relative}
+
+/* header - center the title and make it the hero */
+.toprow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin-bottom:6px}
+.logo{
+  font-family:'Fredoka One',cursive;
+  font-size:40px; /* bigger hero size */
+  margin:0;
+  line-height:1;
+  /* gradient text */
+  background: linear-gradient(90deg, #ff4f8b, #ff9bbf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 6px 18px rgba(255,100,150,0.18);
+  letter-spacing: -0.5px;
+}
+.sub{font-weight:600;color:#8f5a6f;font-size:14px}
+
+/* main grid */
+.portal-area{display:flex;gap:18px;align-items:stretch}
+.scene{flex:1;display:flex;align-items:center;justify-content:center;position:relative;padding:24px 14px 40px 14px;height:360px}
+.controls{width:360px;padding:18px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.99),rgba(255,255,255,0.98));box-shadow:0 10px 30px rgba(0,0,0,0.05);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+
+/* portal visuals */
+.door-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%}
+
+/* REMOVE the big blurred ring */
+.portal-ring{display:none !important;}
+
+.door{width:240px;height:240px;border-radius:50%;background:radial-gradient(circle at 32% 30%, #fff,#ffeff6);border:6px solid rgba(255,255,255,0.6);box-shadow:0 18px 48px rgba(255,105,180,0.14);display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.2,.9,.3,1);z-index:2}
+.door:hover{transform:scale(1.02) translateY(-2px)}
+.door .center{font-weight:700;color:var(--accent);text-align:center;padding:18px;line-height:1.2;font-size:16px}
+
+/* ready badge (centered near card bottom now) */
+.ready-badge{
+  position:absolute;
+  left:50%;
+  bottom:28px;
+  transform:translateX(-50%) scale(.98);
+  z-index:4;
+  background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.92));
+  padding:12px 18px;border-radius:999px;box-shadow:0 18px 40px rgba(255,105,180,0.06);display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;
+  transition:all .6s cubic-bezier(.2,.9,.3,1);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,120,170,0.06);
+}
+.ready-badge.show{
+  opacity:1;transform:translateX(-50%) scale(1);animation:badgePop .6s cubic-bezier(.2,.9,.3,1) both;
+  box-shadow: 0 20px 50px rgba(255,90,140,0.10), 0 6px 18px rgba(255,120,170,0.05);
+}
+@keyframes badgePop{0%{transform:translateX(-50%) scale(.72);opacity:0}70%{transform:translateX(-50%) scale(1.06)}100%{transform:translateX(-50%) scale(1);opacity:1}}
+.ready-emoji{font-size:18px}
+.ready-text{color:#c63a73;font-weight:800;font-size:15px;letter-spacing:0.2px}
+.ready-badge.show::after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  width:200%; height:200%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,145,185,0.12), rgba(255,145,185,0));
+  z-index:-1;
+  animation:glowPulse 1.6s ease-out infinite;
+}
+@keyframes glowPulse{
+  0%{opacity:0.0; transform:translate(-50%,-50%) scale(.9)}
+  50%{opacity:0.9; transform:translate(-50%,-50%) scale(1.02)}
+  100%{opacity:0; transform:translate(-50%,-50%) scale(1.12)}
+}
+
+/* sparkles */
+.sparkles{position:absolute;inset:0;pointer-events:none;z-index:1}
+.sparkles .s{position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.9);box-shadow:0 0 14px rgba(255,200,230,0.7);opacity:0.0;transform:scale(.6)}
+.sparkles .s1{left:16%;top:28%;animation:sp1 3.8s ease-in-out infinite}
+.sparkles .s2{left:72%;top:18%;animation:sp2 4.6s ease-in-out infinite}
+.sparkles .s3{left:44%;top:10%;animation:sp3 5.2s ease-in-out infinite}
+.sparkles .s4{left:30%;top:62%;animation:sp1 4.2s ease-in-out infinite}
+.sparkles .s5{left:82%;top:54%;animation:sp2 5.6s ease-in-out infinite}
+.sparkles .s6{left:56%;top:42%;animation:sp3 4.8s ease-in-out infinite}
+@keyframes sp1{0%{opacity:0;transform:scale(.5) translateY(6px)}30%{opacity:1;transform:scale(1.05) translateY(-6px)}70%{opacity:1;transform:scale(.9) translateY(4px)}100%{opacity:0;transform:scale(.6) translateY(0)}}
+@keyframes sp2{0%{opacity:0;transform:scale(.6) translateY(4px)}30%{opacity:1;transform:scale(1.08) translateY(-8px)}70%{opacity:1;transform:scale(.92) translateY(6px)}100%{opacity:0;transform:scale(.6) translateY(0)}}
+@keyframes sp3{0%{opacity:0;transform:scale(.6) translateY(2px)}30%{opacity:1;transform:scale(1.04) translateY(-4px)}70%{opacity:1;transform:scale(.95) translateY(6px)}100%{opacity:0;transform:scale(.6) translateY(0)}}
+
+/* status + inputs */
+.statusRow{text-align:center;margin-bottom:10px}
+.bigtxt{font-weight:800;color:#6c3a4e}
+.count{font-weight:900;font-size:28px;color:var(--accent);margin-top:6px}
+.opens{font-size:13px;color:#9a657a;margin-top:8px}
+
+.login{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.inp{padding:12px;border-radius:12px;border:1px solid rgba(150,80,110,0.08);font-weight:700;font-size:15px;text-align:center;outline:none;transition:box-shadow .18s, transform .06s}
+.inp:focus{box-shadow:0 8px 18px rgba(255,105,180,0.08);transform:translateY(-2px);border-color:rgba(255,105,180,0.14)}
+.btn{padding:12px;border-radius:12px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-600));color:#fff;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 10px 30px rgba(255,105,180,0.10);transition:transform .12s,box-shadow .12s}
+.btn:active{transform:translateY(1px) scale(.995);box-shadow:0 6px 18px rgba(255,105,180,0.08)}
+
+/* messages */
+.msgContainer{margin-top:8px;min-height:42px}
+.msg{display:none;padding:10px;border-radius:10px;font-weight:700;font-size:14px;text-align:center}
+.msg.info{background:linear-gradient(90deg,#fff7fb,#fff);color:#7a4d63}
+.msg.success{background:linear-gradient(90deg,#f0fff6,#fff);color:#11966a}
+.msg.error{background:linear-gradient(90deg,#fff5f8,#fff);color:#d73b66}
+.msg.show{display:block;animation:pop .42s cubic-bezier(.2,.9,.3,1)}
+@keyframes pop{0%{transform:scale(.98);opacity:0}60%{transform:scale(1.03);opacity:1}100%{transform:scale(1);opacity:1}}
+
+/* video */
+.video-wrap{margin-top:12px;display:none}
+iframe,video{width:100%;height:340px;border-radius:10px;border:none}
+
+/* floating hearts */
+.floating-heart{position:fixed;bottom:0;z-index:3;pointer-events:none;font-size:20px;animation:floatUp 4.8s linear forwards}
+@keyframes floatUp{0%{transform:translateY(0) scale(.9);opacity:1}100%{transform:translateY(-240px) scale(1.15);opacity:0}}
+
+/* responsive */
+@media(max-width:880px){
+  .portal-area{flex-direction:column-reverse;gap:12px}
+  .scene{height:300px;padding:12px 8px 80px 8px}
+  .portal-ring{display:none !important;}
+  .door{width:160px;height:160px;border-width:4px}
+  .controls{width:100%;padding:14px}
+  .count{font-size:24px}
+  iframe,video{height:220px}
+  .logo{font-size:30px}
+  .ready-badge{bottom:20px;padding:10px 14px}
+}
+@media(max-width:420px){
+  .door{width:140px;height:140px}
+  .portal-ring{display:none !important;}
+  .count{font-size:22px}
+  .inp{padding:10px}
+  .btn{padding:11px;font-size:15px}
+  .logo{font-size:26px}
+  .card{padding-bottom:72px}
+}
+
+/* ensure the canvas stays behind content and pointer-events are off */
+#bgCanvas{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+  will-change:transform;
+}
+
+/* Respect reduced motion: hide background animation in this case */
+@media (prefers-reduced-motion: reduce) {
+  #bgCanvas { display:none !important; }
+}

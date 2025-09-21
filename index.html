@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Birthday ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Animated background canvas (keeps your existing canvas id) -->
+  <canvas id="bgCanvas"></canvas>
+
+  <main class="wrap" role="main">
+    <section class="card" aria-labelledby="siteTitle">
+      <header class="toprow">
+        <h1 id="siteTitle" class="logo">Kunji's Birthday Gift</h1>
+        <div class="sub">For the one I love sooo much <span aria-hidden>💖</span></div>
+      </header>
+
+      <div class="portal-area">
+        <div class="scene" aria-hidden="false">
+          <div class="door-wrap" id="doorWrap">
+            <!-- decorative ring stays for animation -->
+            <div class="portal-ring" id="portalRing" aria-hidden="true"></div>
+
+            <!-- the circular gift/portal visual -->
+            <div id="door" class="door" aria-hidden="false" role="img" aria-label="Birthday Portal">
+              <div class="center" id="doorLabel">✨ Party karne ka time has come! ✨</div>
+            </div>
+
+            <!-- centered badge: "Birthday ka gift is ready" (hidden until unlocked by script) -->
+            <div class="ready-badge" id="readyBadge" aria-hidden="true">
+              <div class="ready-emoji">🎉</div>
+              <div class="ready-text">Birthday ka gift is ready ✨</div>
+            </div>
+          </div>
+
+          <!-- sparkles container (animated via CSS) -->
+          <div class="sparkles" id="sparkles" aria-hidden="true">
+            <span class="s s1"></span><span class="s s2"></span><span class="s s3"></span>
+            <span class="s s4"></span><span class="s s5"></span><span class="s s6"></span>
+          </div>
+        </div>
+
+        <aside class="controls" aria-label="Gift controls">
+          <div class="statusRow">
+            <div>
+              <!-- friendly copy: "Gift Countdown" -->
+              <div class="bigtxt">Bas itni der aur:</div>
+              <div class="count" id="statusText">00:00:00</div>
+              <div class="opens" id="opensText">Opens at 12:00 AM </div>
+            </div>
+          </div>
+
+          <form id="loginForm" class="login" aria-label="Login to portal" onsubmit="return false;">
+            <input id="userInput" class="inp" placeholder="Username" autocomplete="off" inputmode="text" />
+            <input id="passInput" class="inp" type="password" placeholder="Password" inputmode="text" />
+            <button id="loginBtn" class="btn" aria-label="Enter the portal">Open the gift 🎁✨</button>
+
+            <div id="msgContainer" class="msgContainer" aria-live="polite">
+              <div id="msgInfo" class="msg info" role="status"></div>
+              <div id="msgSuccess" class="msg success" role="status"></div>
+              <div id="msgErr" class="msg error" role="alert"></div>
+            </div>
+          </form>
+
+          <div class="video-wrap" id="videoWrap" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
